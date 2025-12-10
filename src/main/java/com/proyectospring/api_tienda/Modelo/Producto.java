@@ -1,4 +1,4 @@
-package com.proyectospring.api_tienda.Controlador;
+package com.proyectospring.api_tienda.Modelo;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -10,7 +10,7 @@ public class Producto {
     int id_producto;
     String nombre;
     String descripcion;
-    int precio;
+    double precio;
     int stock;
     String categoria;
 }

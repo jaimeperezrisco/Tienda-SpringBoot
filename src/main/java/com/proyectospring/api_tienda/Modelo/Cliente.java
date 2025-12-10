@@ -1,4 +1,4 @@
-package com.proyectospring.api_tienda.Controlador;
+package com.proyectospring.api_tienda.Modelo;
 
 import jakarta.persistence.*;
 import lombok.Data;
