@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name="Order")
+@Table(name = "Pedido")
 @Data
 public class Pedido {
-    int id_pedido;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id_pedido;
     String fecha;
     int total;
     String metodo_pago;
