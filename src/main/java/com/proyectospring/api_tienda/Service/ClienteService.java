@@ -27,4 +27,27 @@ import org.springframework.beans.factory.annotation.Autowired;
         public Cliente crearCliente(Cliente cliente) {
             return clienteRepository.save(cliente);
         }
+
+        //Para PUT  
+        public Cliente actualizarCliente(Long idCliente, Cliente clienteActualizado) {
+            Cliente clienteExistente = clienteRepository.findById(idCliente)
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + idCliente));
+
+            // Actualizamos los campos
+            clienteExistente.setNombre(clienteActualizado.getNombre());
+            clienteExistente.setApellidos(clienteActualizado.getApellidos());
+            clienteExistente.setDireccion(clienteActualizado.getDireccion());
+            clienteExistente.setEmail(clienteActualizado.getEmail());
+            clienteExistente.setTelefono(clienteActualizado.getTelefono());
+
+            return clienteRepository.save(clienteExistente);
+        }
+
+        //DELETE
+        public void eliminarCliente(Long idCliente) {
+            Cliente cliente = clienteRepository.findById(idCliente)
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + idCliente));
+
+            clienteRepository.delete(cliente);
+        }
     }

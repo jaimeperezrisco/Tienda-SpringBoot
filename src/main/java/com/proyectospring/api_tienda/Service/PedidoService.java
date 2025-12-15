@@ -19,12 +19,31 @@ public class PedidoService {
         return pedidoRepository.findAll();
     }
 
-    public Pedido getPedidoById(Long idPedido ) {
-            Optional<Pedido> pedido = pedidoRepository.findById(idPedido);
-            return pedido.orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
-        }
+    public Pedido getPedidoById(Long idPedido) {
+        Optional<Pedido> pedido = pedidoRepository.findById(idPedido);
+        return pedido.orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
+    }
 
-        public Pedido crearPedido(Pedido pedido) {
-            return pedidoRepository.save(pedido);
-        }
+    public Pedido crearPedido(Pedido pedido) {
+        return pedidoRepository.save(pedido);
+    }
+
+    // Para PUT
+    public Pedido actualizarPedido(Long idPedido, Pedido pedidoActualizado) {
+        Pedido pedidoExistente = pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
+
+        pedidoExistente.setFecha(pedidoActualizado.getFecha());
+        pedidoExistente.setTotal(pedidoActualizado.getTotal());
+        pedidoExistente.setMetodo_pago(pedidoActualizado.getMetodo_pago());
+        pedidoExistente.setEstado(pedidoActualizado.getEstado());
+
+        return pedidoRepository.save(pedidoExistente);
+    }
+
+    public void eliminarPedido(Long idPedido) {
+        Pedido pedido = pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
+        pedidoRepository.delete(pedido);
+    }
 }

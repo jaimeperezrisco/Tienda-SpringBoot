@@ -28,4 +28,24 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
+    // Para PUT
+    public Producto actualizarProducto(Long idProducto, Producto productoActualizado) {
+        Producto productoExistente = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + idProducto));
+
+        productoExistente.setNombre(productoActualizado.getNombre());
+        productoExistente.setDescripcion(productoActualizado.getDescripcion());
+        productoExistente.setPrecio(productoActualizado.getPrecio());
+        productoExistente.setStock(productoActualizado.getStock());
+        productoExistente.setCategoria(productoActualizado.getCategoria());
+
+        return productoRepository.save(productoExistente);
+    }
+
+    public void eliminarProducto(Long idProducto) {
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con ID: " + idProducto));
+        productoRepository.delete(producto);
+    }
+
 }

@@ -24,8 +24,26 @@ public class EmpleadoService {
             return empleado.orElseThrow(() -> new RuntimeException("Empleado no encontrado con ID: " + idEmpleado));
         }
 
-        public Empleado crearEmpleado(Empleado empleado) {
-            return empleadoRepository.save(empleado);
-        }
+    public Empleado crearEmpleado(Empleado empleado) {
+        return empleadoRepository.save(empleado);
+    }
 
+    // Para PUT
+    public Empleado actualizarEmpleado(Long idEmpleado, Empleado empleadoActualizado) {
+        Empleado empleadoExistente = empleadoRepository.findById(idEmpleado)
+                .orElseThrow(() -> new RuntimeException("Empleado no encontrado con ID: " + idEmpleado));
+
+        empleadoExistente.setNombre(empleadoActualizado.getNombre());
+        empleadoExistente.setPuesto(empleadoActualizado.getPuesto());
+        empleadoExistente.setSalario(empleadoActualizado.getSalario());
+        empleadoExistente.setFecha_contratacion(empleadoActualizado.getFecha_contratacion());
+
+        return empleadoRepository.save(empleadoExistente);
+    }
+    
+    public void eliminarEmpleado(Long idEmpleado) {
+        Empleado empleado = empleadoRepository.findById(idEmpleado)
+                .orElseThrow(() -> new RuntimeException("Empleado no encontrado con ID: " + idEmpleado));
+        empleadoRepository.delete(empleado);
+    }
 }
