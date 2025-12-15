@@ -1,19 +1,18 @@
-package com.proyectospring.api_tienda.Service;
+package com.proyectospring.api_tienda.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyectospring.api_tienda.Modelo.Empleado;
-import com.proyectospring.api_tienda.Repository.EmpleadoRepository;
+import com.proyectospring.api_tienda.model.Empleado;
+import com.proyectospring.api_tienda.repository.EmpleadoRepository;
 
 @Service
 public class EmpleadoService {
-    public final EmpleadoRepository empleadoRepository;
 
-    public EmpleadoService(EmpleadoRepository empleadoRepository) {
-        this.empleadoRepository = empleadoRepository;
-    }
+    @Autowired
+    EmpleadoRepository empleadoRepository;
 
     public List<Empleado> getAllEmpleados() {
         return empleadoRepository.findAll();

@@ -1,9 +1,9 @@
-package com.proyectospring.api_tienda.Repository;
+package com.proyectospring.api_tienda.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.proyectospring.api_tienda.Modelo.Cliente;
+import com.proyectospring.api_tienda.model.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository <Cliente, Long> {

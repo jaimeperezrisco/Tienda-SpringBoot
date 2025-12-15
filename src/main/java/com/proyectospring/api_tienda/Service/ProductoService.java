@@ -1,19 +1,18 @@
-package com.proyectospring.api_tienda.Service;
+package com.proyectospring.api_tienda.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyectospring.api_tienda.Modelo.Producto;
-import com.proyectospring.api_tienda.Repository.ProductoRepository;
+import com.proyectospring.api_tienda.model.Producto;
+import com.proyectospring.api_tienda.repository.ProductoRepository;
 
 @Service
 public class ProductoService {
-    public final ProductoRepository productoRepository;
 
-    public ProductoService(ProductoRepository productoRepository) {
-        this.productoRepository = productoRepository;
-    }
+    @Autowired
+    ProductoRepository productoRepository;
 
     public List<Producto> getAllProductos() {
         return productoRepository.findAll();
