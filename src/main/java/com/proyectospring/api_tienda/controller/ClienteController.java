@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectospring.api_tienda.model.Cliente;
@@ -29,10 +30,16 @@ public class ClienteController {
     public List<Cliente> obtenerClientes() {
         return clienteService.getAllClientes();
     }
-    
+
     @GetMapping("/{id}")
     public Cliente getClienteByID(@PathVariable Long id) {
         return clienteService.getClienteById(id);
+    }
+
+    // Modificacion 1 (Busqueda Compuesta):
+    @GetMapping("/buscar")
+    public List<Cliente> getClienteByNombreYTelefono(@RequestParam String nombre, String telefono) {
+        return clienteService.getClienteByNombreYTelefono(nombre, telefono);
     }
 
     @PostMapping
@@ -50,6 +57,6 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
         clienteService.eliminarCliente(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT); //Devuelve 204, si eliminó
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Devuelve 204, si eliminó
     }
 }
