@@ -38,7 +38,7 @@ public class ClienteController {
 
     // Modificacion 1 (Busqueda Compuesta):
     @GetMapping("/buscar")
-    public List<Cliente> getClienteByNombreYTelefono(@RequestParam String nombre, String telefono) {
+    public List<Cliente> getClienteByNombreYTelefono(@RequestParam String nombre, @RequestParam String telefono) {
         return clienteService.getClienteByNombreYTelefono(nombre, telefono);
     }
 
