@@ -43,6 +43,13 @@ public class ClienteService {
     public Cliente actualizarCliente(Long idCliente, Cliente clienteActualizado) {
         Cliente clienteExistente = clienteRepository.findById(idCliente)
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + idCliente));
+                
+        //Si el email esta cambiado y existe ya en otro cliente error
+        if (!clienteExistente.getEmail().equals(clienteActualizado.getEmail()) &&
+                clienteRepository.existsByEmail(clienteActualizado.getEmail())) {
+            throw new RuntimeException(
+                    "Ya existe cliente con este email: " + clienteActualizado.getEmail());
+        }
 
         // Actualizamos los campos
         clienteExistente.setNombre(clienteActualizado.getNombre());
