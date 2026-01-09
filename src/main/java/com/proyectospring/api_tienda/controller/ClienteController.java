@@ -31,9 +31,15 @@ public class ClienteController {
         return clienteService.getAllClientes();
     }
 
+    // Modificacion 2.4: Manejo error 404 en GET
     @GetMapping("/{id}")
-    public Cliente getClienteByID(@PathVariable Long id) {
-        return clienteService.getClienteById(id);
+    public ResponseEntity<Cliente> getClienteByID(@PathVariable Long id) {
+        try {
+            Cliente cliente = clienteService.getClienteById(id);
+            return ResponseEntity.ok(cliente);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // Modificacion 1 (Busqueda Compuesta):
@@ -48,15 +54,35 @@ public class ClienteController {
         return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
     }
 
+    // Modificacion 2.4: Manejo error 404 en GET
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> actualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-        Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente);
-        return new ResponseEntity<>(clienteActualizado, HttpStatus.OK);
+        try {
+            Cliente clienteActualizado = clienteService.actualizarCliente(id, cliente);
+            return ResponseEntity.ok(clienteActualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
-        clienteService.eliminarCliente(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Devuelve 204, si eliminó
+        try {
+            clienteService.eliminarCliente(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Modificacion 2.1: Implementar endpoint de operación en lote
+    @PostMapping("/lote")
+    public ResponseEntity<?> crearClientesLote(@RequestBody List<Cliente> clientes) {
+        try {
+            List<Cliente> clientesGuardados = clienteService.crearClientesLote(clientes);
+            return ResponseEntity.status(HttpStatus.CREATED).body(clientesGuardados);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

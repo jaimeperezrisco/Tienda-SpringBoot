@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.proyectospring.api_tienda.model.Cliente;
 import com.proyectospring.api_tienda.repository.ClienteRepository;
@@ -31,7 +32,7 @@ public class ClienteService {
     }
 
     // POST
-    // Modificacion 2 (Anti-Duplicados):
+    // Modificacion 1.2 (Anti-Duplicados):
     public Cliente crearCliente(Cliente cliente) {
         if (clienteRepository.existsByEmail(cliente.getEmail())) {
             throw new RuntimeException("Ya existe cliente Con este email: " + cliente.getEmail());
@@ -67,5 +68,30 @@ public class ClienteService {
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado con ID: " + idCliente));
 
         clienteRepository.delete(cliente);
+    }
+
+    //Modificacion 2.2: Lógica de Servicio Transaccional
+    @Transactional
+    public List<Cliente> crearClientesLote(List<Cliente> clientes) {
+
+        for (Cliente cliente : clientes) {
+
+            // a)validación de la Modificación 1
+            if (clienteRepository.existsByEmail(cliente.getEmail())) {
+                throw new RuntimeException(
+                        "Ya existe cliente con este email: " + cliente.getEmail());
+            }
+
+            // b) Condición artificial para simular error
+            if ("ERROR".equalsIgnoreCase(cliente.getNombre())) {
+                throw new RuntimeException(
+                        "Nombre prohibido detectado: ERROR");
+            }
+
+            // c) Guardamos el cliente
+            clienteRepository.save(cliente);
+        }
+
+        return clientes;
     }
 }
