@@ -9,9 +9,12 @@ import lombok.Data;
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id_pedido;
+    Long id;
     String fecha;
     int total;
     String metodo_pago;
     String estado;
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    Producto producto;
 }

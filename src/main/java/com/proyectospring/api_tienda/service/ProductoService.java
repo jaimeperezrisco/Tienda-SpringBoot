@@ -48,4 +48,13 @@ public class ProductoService {
         productoRepository.delete(producto);
     }
 
+    //Modificacion3: Consulta Agregada y Búsqueda por Rango
+    public Long countById(Long producto_id){
+        return productoRepository.countById(producto_id);
+    }
+
+    public List<Producto> getProductoyByPrecio(double min, double max) {
+        return productoRepository.findByPrecioBetween(min, max);
+    }
+
 }

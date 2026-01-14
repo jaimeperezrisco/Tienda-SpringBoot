@@ -45,5 +45,7 @@ public class PedidoService {
         Pedido pedido = pedidoRepository.findById(idPedido)
                 .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
         pedidoRepository.delete(pedido);
-    }
+    }  
+
+    
 }

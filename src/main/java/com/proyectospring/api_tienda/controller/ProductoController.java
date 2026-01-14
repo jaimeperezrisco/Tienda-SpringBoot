@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectospring.api_tienda.model.Producto;
@@ -34,6 +35,12 @@ public class ProductoController {
     @GetMapping("/{id}")
     public Producto getProductoByID(@PathVariable Long id) {
         return productoService.getProductoyById(id);
+    }
+
+    @GetMapping("/buscar-por-precio")
+    public ResponseEntity<List<Producto>> getProductoByPrecio(@RequestParam double min, @RequestParam double max) {
+        List<Producto> preciosProducto = productoService.getProductoyByPrecio(min, max);
+        return ResponseEntity.ok(preciosProducto);
     }
 
     @PostMapping

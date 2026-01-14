@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyectospring.api_tienda.model.Pedido;
 import com.proyectospring.api_tienda.service.PedidoService;
+import com.proyectospring.api_tienda.service.ProductoService;
 
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
+    
+    ProductoService productoService;
     private final PedidoService pedidoService;
 
     public PedidoController(PedidoService pedidoService) {
@@ -52,4 +55,14 @@ public class PedidoController {
         pedidoService.eliminarPedido(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT); // Devuelve 204, si eliminó
     }
+
+    //Modificacion 3: Consulta Agregada y Búsqueda por Rango
+    @GetMapping("/{producto_id}/conteo-productos")
+    public ResponseEntity<Long> countById(@PathVariable Long producto_id){
+        Long pedido = productoService.countById(producto_id);
+        return new ResponseEntity<>(pedido,HttpStatus.OK);
+    }
+
+   
+    
 }

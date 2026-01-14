@@ -18,7 +18,7 @@ INSERT INTO Producto (nombre, descripcion, precio, stock, categoria) VALUES
 ('Ratón Inalámbrico', 'Ratón ergonómico recargable', 35.00, 120, 'Periféricos');
 
 -- Datos para la tabla Pedido (Order)
-INSERT INTO Pedido (fecha, total, metodo_pago, estado) VALUES
-('2024-03-10', 1286, 'Tarjeta', 'Enviado'),
-('2024-03-11', 485, 'PayPal', 'Pendiente'),
-('2024-03-12', 35, 'Transferencia', 'Entregado');
+INSERT INTO Pedido (fecha, total, metodo_pago, estado,producto_id) VALUES
+('2024-03-10', 1286, 'Tarjeta', 'Enviado',1),
+('2024-03-11', 485, 'PayPal', 'Pendiente',1),
+('2024-03-12', 35, 'Transferencia', 'Entregado',2);
